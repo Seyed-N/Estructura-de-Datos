@@ -1,0 +1,25 @@
+// suma de numeros enteros.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+
+using namespace std;
+
+int sumaRecursiva(int n);
+
+int main()
+{
+    int n;
+    cout << "ingresa el numero n: ";
+    cin >> n;
+
+    cout << "La suma es: " << sumaRecursiva(n);
+}
+
+int sumaRecursiva(int n) {
+    if (n == 1)
+        return 1;
+    else
+        return sumaRecursiva(n - 1)+ n; //teoria compañera 1 + salidor
+    
+}
