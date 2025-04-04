@@ -1,0 +1,26 @@
+// serie de Fibonacci.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
+//
+
+#include <iostream>
+using namespace std;
+
+int fib(int n);
+
+int main() {
+    int n, fibo;
+    do
+    {
+        cout << "ingrese el numero n: ";
+        cin >> n;
+    } while (n<0);
+    
+    fibo = fib(n);
+    cout << "la serie de fibonacci es: " << fibo;
+}
+
+int fib(int n) {
+    if (n <= 1) 
+        return n; //condicion base
+    else 
+        return fib(n - 1) + fib(n - 2); //condicion recursiva
+}
