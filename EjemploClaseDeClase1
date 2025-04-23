@@ -1,0 +1,107 @@
+#include <iostream>
+#include <string>
+#include "EjemploClasesDeClases.h"
+using namespace std;
+
+const int MAX_EMPLEADOS = 100;
+
+class Empleado {
+private:
+    string nombre;
+    int edad;
+    float salario;
+
+public: //porque no tiene constructor? porque 
+    void ingresarDatos() {
+        cout << "Ingrese nombre: ";
+        cin.ignore();
+        getline(cin, nombre);
+        cout << "Ingrese edad: ";
+        cin >> edad;
+        cout << "Ingrese salario: ";
+        cin >> salario;
+    }
+
+    void mostrarDatos() const {
+        cout << "Nombre: " << nombre << endl;
+        cout << "Edad: " << edad << " anios" << endl;
+        cout << "Salario: $" << salario << endl;
+        cout << "------------------------" << endl;
+    }
+
+    float getSalario() const {
+        return salario;
+    }
+};
+
+class Planilla {
+private:
+    Empleado empleados[MAX_EMPLEADOS];
+    int cantidad;
+    string sucursal;
+
+
+public:
+    Planilla(string _sucursal) {
+        cantidad = 0;
+        sucursal = _sucursal;
+    }
+
+    void ingresarEmpleados() {
+        cout << "\nSucursal: " << sucursal << endl;
+        cout << "Cuantos empleados desea ingresar? ";
+        cin >> cantidad;
+
+        if (cantidad > MAX_EMPLEADOS || cantidad <= 0) {
+            cout << "Número no valido. El maximo permitido es " << MAX_EMPLEADOS << "." << endl;
+            cantidad = 0;
+            return;
+        }
+
+        for (int i = 0; i < cantidad; ++i) {
+            cout << "\nEmpleado #" << (i + 1) << " - Sucursal " << sucursal << endl;
+            empleados[i].ingresarDatos();
+        }
+    }
+
+
+    void mostrarPlanilla() const {
+        cout << "\n=== LISTA DE EMPLEADOS ===" << endl;
+        cout << "Sucursal: " << sucursal << endl;
+        for (int i = 0; i < cantidad; ++i) {
+            empleados[i].mostrarDatos();
+        }
+        cout << "Promedio de salarios: $" << promedioSalarios() << endl;
+        cout << "=============================" << endl;
+    }
+
+    float promedioSalarios() const {
+        if (cantidad == 0) {
+            return 0.0; // Evita dividir por cero
+        }
+
+        float suma = 0.0;
+        for (int i = 0; i < cantidad; ++i) {
+            // Para acceder al salario, necesitamos agregar un getter en Empleado
+            suma += empleados[i].getSalario();
+        }
+        return suma / cantidad;
+
+    }
+};
+
+    int main() {
+        Planilla Brisas("Brisas");
+        Planilla Mall("Mall Ventura");
+        Planilla CineCenter("CineCenter");
+
+        Brisas.ingresarEmpleados();
+        Mall.ingresarEmpleados();
+        CineCenter.ingresarEmpleados();
+
+        Brisas.mostrarPlanilla();
+        Mall.mostrarPlanilla();
+        CineCenter.mostrarPlanilla();
+
+        return 0;
+    }
