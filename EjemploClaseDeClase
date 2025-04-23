@@ -1,0 +1,74 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+const int MAX_EMPLEADOS = 100;
+
+class Empleado {
+private:
+    string nombre;
+    int edad;
+    float salario;
+
+public: //porque no tiene constructor? porque 
+    void ingresarDatos() {
+        cout << "Ingrese nombre: ";
+        cin.ignore();
+        getline(cin, nombre);
+        cout << "Ingrese edad: ";
+        cin >> edad;
+        cout << "Ingrese salario: ";
+        cin >> salario;
+    }
+
+    void mostrarDatos() const {
+        cout << "Nombre: " << nombre << endl;
+        cout << "Edad: " << edad << " anios" << endl;
+        cout << "Salario: $" << salario << endl;
+        cout << "------------------------" << endl;
+    }
+};
+
+class Planilla {
+private:
+    Empleado empleados[MAX_EMPLEADOS];
+    int cantidad;
+
+public:
+    Planilla() {
+    }
+
+    void ingresarEmpleados(int _cantidad) {
+        cantidad = _cantidad;
+        for (int i = 0; i < _cantidad; ++i) {
+            cout << "\nEmpleado #" << (i + 1) << endl;
+            empleados[i].ingresarDatos();
+        }
+    }
+
+    void mostrarPlanilla() const {
+        cout << "\n=== LISTA DE EMPLEADOS ===" << endl;
+        for (int i = 0; i < cantidad; ++i) {
+            empleados[i].mostrarDatos();
+        }
+    }
+};
+
+int main() {
+    int cantidad;
+    do {
+        cout << "Cuantos empleados desea ingresar? ";
+        cin >> cantidad;
+        if (cantidad > MAX_EMPLEADOS || cantidad <= 0) {
+            cout << "Numero no valido. El maximo permitido es " << MAX_EMPLEADOS << "." << endl;
+            cantidad = 0;
+        }
+    } while (cantidad > MAX_EMPLEADOS || cantidad <= 0);
+
+
+    Planilla miPlanilla;
+    miPlanilla.ingresarEmpleados(cantidad);
+    miPlanilla.mostrarPlanilla();
+
+    return 0;
+}
